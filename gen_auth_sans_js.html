@@ -6,10 +6,26 @@
  
 <!--
  Purpose: Uses simple POST method in browser
- to create authentication token for use in later
- calls to google prediction API
+	to create authentication token for use in later
+	calls to google prediction API
+  this file: https://javascript-google-prediction-api.googlecode.com/hg/gen_auth_sans_js.html
+ 
+   Copyright 2010 Bob Racko
 
- this file: https://javascript-google-prediction-api.googlecode.com/hg/gen_auth_sans_js.html
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+   
+
+
  -->
  
 <h3>Use your google account for a token to the xapi service... </h3>
@@ -24,13 +40,15 @@ Password:<input type="password" name='Passwd' value='pass' />
 <input type='submit' />
 </form>
 Generated token appears below on line containing Auth= <br />
-or else Error= indicates how to resolve problem. <br />
-BadAuthentication - not really a valid email <br />
-CaptchaRequired - password did not match <br />
+or else Error= indicates how to resolve problem. <ul>
+<li>BadAuthentication - not really a valid email </li>
+<li>CaptchaRequired - password did not match or timeout</li>
+</ul>
 <hr />
 <iframe id="ResFrame"
   name="ResFrame"
   style="width:2200px; height:200px; border: 10px"
   ></iframe>
+  &copy; 2010 by Bob Racko
 </body>
 </html>
