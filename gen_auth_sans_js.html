@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>Generate Authentication Token (sans js)</title>
+</head>
+<body>
+ 
+<!--
+ Purpose: Uses simple POST method in browser
+ to create authentication token for use in later
+ calls to google prediction API
+
+ this file: https://javascript-google-prediction-api.googlecode.com/hg/gen_auth_sans_js.html
+ -->
+ 
+<h3>Use your google account for a token to the xapi service... </h3>
+<form method='POST'
+action='https://www.google.com/accounts/ClientLogin'
+target='ResFrame'
+>
+<input type='hidden' name='service' value='xapi' />
+<input type='hidden' name='accountType' value='HOSTED_OR_GOOGLE' />
+Google Email:<input type="text" name='Email' value='you@gmail.com' /> 
+Password:<input type="password" name='Passwd' value='pass' /> 
+<input type='submit' />
+</form>
+Generated token appears below on line containing Auth= <br />
+or else Error= indicates how to resolve problem. <br />
+BadAuthentication - not really a valid email <br />
+CaptchaRequired - password did not match <br />
+<hr />
+<iframe id="ResFrame"
+  name="ResFrame"
+  style="width:2200px; height:200px; border: 10px"
+  ></iframe>
+</body>
+</html>
