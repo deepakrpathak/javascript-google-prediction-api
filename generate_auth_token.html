@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>Test</title>
+<script type="text/javascript">//<![CDATA[
+
+/// breaks if file:// URL.  http://www.questionhub.com/StackOverflow/3595515
+/// Origin null is not allowed by Access-Control-Allow-Origin
+
+function log(s) {  
+	if (window.console && window.console.log) {
+		window.console.log("log:" + s); 
+	} else {
+		alert("log " + s);
+	}
+}
+  
+function AJAXreq() {
+	var ret = false;
+	if (window.XMLHttpRequest){
+		ret=new XMLHttpRequest();
+	} else if (window.ActiveXObject){
+	  var names = [
+				"Msxml2.XMLHTTP.6.0",
+				"Msxml2.XMLHTTP.3.0",
+				"Msxml2.XMLHTTP",
+				"Microsoft.XMLHTTP"
+				];
+      for (var i in names ) {
+        try {
+          ret = new ActiveXObject(names[i]);
+          break;
+        } catch (e) { continue; }
+      }	
+	}
+	if(!ret) {
+		log("could not form AJAX request");
+		return false;
+	}
+	return ret;
+}
+
+function btn(btn) {
+	var ret = btn.value;
+	btn.value = '';
+	return ret;
+	}
+	
+
+function update() {
+  var em, pw;
+  em = btn(document.forms[0].lin); 
+  pw = btn(document.forms[0].pw);
+  
+  var auth_params = "accountType=HOSTED_OR_GOOGLE"+
+					"&Email="+em+
+                    "&Passwd="+pw+
+					"&service=xapi";
+  var request = AJAXreq();
+  
+  
+  if (!request) {return;}
+  request.open('POST', 'https://www.google.com/accounts/ClientLogin', true);
+request.withCredentials = "true"; 
+  request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+ //cant touch in ff:  request.setRequestHeader("Content-Length", auth_params.length);
+  request.setRequestHeader("Connection", "close");
+  request.setRequestHeader("sec-Origin", "https://www.google.com");
+  request.setRequestHeader = function() {};
+  
+  if (request.overrideMimeType){request.overrideMimeType('text/plain');}
+  
+  request.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      log ("Request done Tokens:" + this.responseText);
+    } else {
+		log("status:" + this.status + " " +this.readyState);
+	}
+  };
+
+  try {
+    //log("t status:" + request.status + " " +request.readyState);
+    request.send( auth_params );
+  } catch (e) {
+    log("Send Exception:\n"+e);
+  }
+}
+  //]]>
+</script>
+</head>
+<body>
+<form action="#" >
+<input type="text" name='lin' value='email' /><br />
+<input type="password" name='pw' value='pass' />
+</form>
+  <a href="javascript:update()">Authenticate</a>
+  
+  
+<!-- http://developer.apple.com/internet/webcontent/iframe.html
+  <script type="text/javascript">
+function handleResponse() {
+  alert('this function is called from server.html')
+}
+</script>
+
+<iframe id="RSIFrame"
+  name="RSIFrame"
+  style="width:0px; height:0px; border: 0px"
+  src="blank.html"></iframe>
+
+<a href="server.html" target="RSIFrame">make RPC call</a>
+-->
+
+</body>
+</html>
